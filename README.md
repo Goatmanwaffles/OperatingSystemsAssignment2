@@ -29,7 +29,7 @@ This program inputs data using `input.txt`. This text file is structured into se
 7, 4, 5
 ```
 Denotes that process 0 has 7, 4, and 5 resource allocated.
-To change the input values edit `input.txt`
+To change the input values edit `input.txt` or swap to `input2.txt` to see unsafe functionality
 ### Code
 ```
 int n = 5; //Number of processes

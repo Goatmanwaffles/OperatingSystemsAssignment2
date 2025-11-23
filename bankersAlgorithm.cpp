@@ -74,28 +74,32 @@ int main(){
     std::cout << "Allocated: " << std::endl;
     for(int i = 0; i<allocation.size();i++){
         for(int j = 0; j < allocation[i].size(); j++){
-            std::cout << allocation[i][j] << ", " << std::endl;
+            std::cout << allocation[i][j] << ", ";
         }
+        std::cout << std::endl;
     }
 
     std::cout << "Max: " << std::endl;
     for(int i = 0; i<max.size();i++){
         for(int j = 0; j < max[i].size(); j++){
-            std::cout << max[i][j] << ", " << std::endl;
+            std::cout << max[i][j] << ", ";
         }
+        std::cout << std::endl;
     }
 
     std::cout << "Needed: " << std::endl;
     for(int i = 0; i<need.size();i++){
         for(int j = 0; j < need[i].size(); j++){
-            std::cout << need[i][j] << ", " << std::endl;
+            std::cout << need[i][j] << ", ";
         }
+        std::cout << std::endl;
     }
 
     std::cout << "Available: " << std::endl;
     for(int i = 0; i<available.size();i++){
-        std::cout << available[i] << ", " << std::endl;
+        std::cout << available[i] << ", ";
     }
+    std::cout << std::endl;
 
     std::vector<bool> finished(n, false);
     std::vector<int> progID(n);
@@ -129,12 +133,17 @@ int main(){
     for(int i = 0; i<finished.size();i++){
         if(finished[i] == false){safe = false;}
     }
+
+    if(safe == true){
     std::cout << "SAFE SQUENCE: ";
     for(int i=0; i<n; i++){
         std::cout << "P" << progID[i];
         if( i != n-1){
             std::cout << " -> ";
         }
+    }
+    } else {
+     std::cout << "NO SAFE SEQUENCE" << std::endl;
     }
 
     return 0;
