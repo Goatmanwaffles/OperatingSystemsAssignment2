@@ -5,33 +5,61 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 int main(){
-    bool debug = false;
     int n = 5; //Number of processes
     int m = 3; //Number of resources
     //Data Structures
-
     //Available: 1D array of size M holds number of available resources of each type
-    std::vector<int> available = {3, 2, 2};
+    std::vector<int> available;
     //Max: 2D array of size N*M that hold the maximum demand of each process in a system
-    std::vector<std::vector<int>> max = {{7, 5, 3}, {3, 3, 2}, {9, 0, 2}, {2, 2, 2}, {4, 3, 3}};
+    std::vector<std::vector<int>> max;
     //Allocation: A 2D array of size n*m that defines the number of resource of each type currently allocated to each process
-    std::vector<std::vector<int>> allocation = {{0, 1, 0}, {2, 0, 0}, {3, 0, 2}, {2, 2, 1}, {0, 0, 2}};
+    std::vector<std::vector<int>> allocation;
     //Need: 2D array of size N*M that indicates the remaining resource need of each process
     std::vector<std::vector<int>> need;
 
-    //Initilize test values from instructions
-    //3 Resource types A B C
-    //5 Processes p0 p1 p2 p3 p4
-    //   Allocation       Max        Available
-    //   A   B   C     A   B   C     A   B   C
-    //p0 0   1   0     7   5   3     3   2   2
-    //p1 2   0   0     3   3   2
-    //p2 3   0   2     9   0   2
-    //p3 2   2   1     2   2   2
-    //p4 0   0   2     4   3   3
-    //Find Need
+    //File IO to read in data
+    std::ifstream input("input.txt");
+
+    if(input.is_open()){std::cout << "file opened properly" << std::endl;} else {std::cout << "file could not open" << std::endl; return 0;}
+
+    enum class Mode {none, allocation, max, available};
+    Mode parseMode = Mode::none;
+    std::string line;
+    while(!input.eof()){
+        std::getline(input, line);
+
+        if(line[0] == '-'){//Changing what we are inputting
+            if(line.find("allocation") != std::string::npos){
+                parseMode = Mode::allocation;
+            } else if(line.find("max") != std::string::npos){
+                parseMode = Mode::max;
+            } else if(line.find("available") != std::string::npos){
+                parseMode = Mode::available;
+            } else {
+                std::cout << "Error Parsing: Likely incorrect input setup";
+                return 0;
+            }
+        } else { //Filling data into vectors
+            //Find and convert data
+            std::vector<int> data = {line[0]-48, line[3]-48, line[6]-48};
+            if(parseMode == Mode::allocation){
+                allocation.push_back(data);
+            } else if (parseMode == Mode::max){
+                max.push_back(data);
+            } else if (parseMode == Mode::available){
+                available = data;
+            }
+        }
+    }
+
+    //File now ended, can close
+    input.close();
+    std::cout << "File closed" << std::endl;
+
+    //Finds Need
     if(allocation.size() == max.size()){ //Size validation
         for(int i=0; i<max.size();++i){
             std::vector<int> value;
