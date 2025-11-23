@@ -46,22 +46,23 @@ int main(){
     std::vector<int> progID(n);
     int currentInd = 0;
 
+
     for(int i=0; i<n;i++){
         for (int j=0; j<n; j++){
             if(finished[j] == false){
                 bool flag = false;
                 for(int k=0; k<m; k++) {
-                    if(need[j][k] > available[j]){
+                    if(need[j][k] > available[k]){
                         flag = true;
                         break;
                     }
                 }
 
                 if(!flag){
-                    currentInd++;
                     progID[currentInd] = j;
-                    for(int k=0; k<m; k++){
-                        available[k] = allocation[j][k];
+                    currentInd++;
+                    for(int x=0; x<m; x++){
+                        available[x] += allocation[j][x];
                     }
                     finished[j] = true;
                 }
