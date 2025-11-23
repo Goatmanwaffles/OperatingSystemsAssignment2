@@ -23,7 +23,7 @@ int main(){
     //File IO to read in data
     std::ifstream input("input.txt");
 
-    if(input.is_open()){std::cout << "file opened properly" << std::endl;} else {std::cout << "file could not open" << std::endl; return 0;}
+    if(input.is_open()){std::cout << "File opened properly" << std::endl;} else {std::cout << "file could not open" << std::endl; return 0;}
 
     enum class Mode {none, allocation, max, available};
     Mode parseMode = Mode::none;
